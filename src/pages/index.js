@@ -1,4 +1,6 @@
 import * as React from "react"
+import { Link } from 'gatsby';
+import { graphql } from 'gatsby';
 
 // styles
 const pageStyles = {
@@ -126,10 +128,11 @@ const links = [
 ]
 
 // markup
-const IndexPage = () => {
+const IndexPage = ({ data }) => {
   return (
     <main style={pageStyles}>
       <title>Home Page</title>
+      <div>{data.site.siteMetadata.title}</div>
       <h1 style={headingStyles}>
         Congratulations
         <br />
@@ -154,6 +157,7 @@ const IndexPage = () => {
             {docLink.text}
           </a>
         </li>
+        <Link to="/page-2">Go to page 2</Link>
         {links.map(link => (
           <li key={link.url} style={{ ...listItemStyles, color: link.color }}>
             <span>
@@ -182,3 +186,13 @@ const IndexPage = () => {
 }
 
 export default IndexPage
+
+export const indexPageQuery = graphql`
+  query SiteTitleQuery {
+    site {
+      siteMetadata {
+        title
+      }
+    }
+  }
+`;
